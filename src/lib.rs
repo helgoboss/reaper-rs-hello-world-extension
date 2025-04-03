@@ -18,10 +18,6 @@ fn plugin_main(context: PluginContext) -> Result<(), Box<dyn Error>> {
     // in the REAPER starting process. At that time, REAPER's last project has probably not
     // been loaded yet, so this will likely give `None`.
     print_project_file_path(reaper);
-    let project_path = reaper
-        .enum_projects(ProjectRef::Current, 256)
-        .map(|project| project.file_path);
-    reaper.show_console_msg(format!("Project path at extension load time: {project_path:?}"));
     // Now let's register a timer to get a place in REAPER's main event loop and defer stuff
     // for later execution.
     session.plugin_register_add_timer(timer_callback)?;
